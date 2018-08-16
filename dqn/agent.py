@@ -5,6 +5,8 @@ import random
 import numpy as np
 from tqdm import tqdm
 import tensorflow as tf
+from functools import reduce
+xrange = range
 
 from .base import BaseModel
 from .history import History
@@ -325,7 +327,7 @@ class Agent(BaseModel):
 
     tf.initialize_all_variables().run()
 
-    self._saver = tf.train.Saver(self.w.values() + [self.step_op], max_to_keep=30)
+    self._saver = tf.train.Saver(list(self.w.values()) + [self.step_op], max_to_keep=30)
 
     self.load_model()
     self.update_target_q_network()
